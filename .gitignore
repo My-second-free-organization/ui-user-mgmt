@@ -1,0 +1,12 @@
+*.class
+*.jar
+*.war
+target/
+build/
+.gradle/
+out/
+.idea/
+*.iml
+.env
+.DS_Store
+Thumbs.db

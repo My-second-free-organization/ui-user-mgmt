@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: platform-core
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/flowforge}
+    username: ${DB_USERNAME:flowforge}
+    password: ${DB_PASSWORD:flowforge}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  redis:
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: ${SPRING_REDIS_PORT:6379}
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: platform-core
+      auto-offset-reset: earliest
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+flowforge:
+  engine:
+    thread-pool-size: ${FLOWFORGE_ENGINE_THREAD_POOL_SIZE:16}
+    max-concurrent-workflows: ${FLOWFORGE_ENGINE_MAX_CONCURRENT_WORKFLOWS:1000}
+    workflow-timeout-seconds: 3600
+  task:
+    default-timeout-seconds: 300
+    max-retries: 3
